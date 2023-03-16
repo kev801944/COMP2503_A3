@@ -1,8 +1,9 @@
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.Queue;
 
-public class BST<T extends Comparable<T>> {
+public class BST<T extends Comparable<T>> implements Iterable<T>{
     class BSTNode implements Comparable<BSTNode> {
         private T data;
         private BSTNode left;
@@ -153,6 +154,14 @@ public class BST<T extends Comparable<T>> {
     private int height(BSTNode r) {
         int h = -1;
 
+        if (r == null){
+            return h;
+        }
+
+        int leftHeight = height(r.getLeft());
+        int rightHeight = height(r.getRight());
+        h = Math.max(leftHeight, rightHeight) + 1;
+
         // TODO
         return h;
     }
@@ -196,28 +205,27 @@ public class BST<T extends Comparable<T>> {
 
     private void levelOrderTraversal(BSTNode r) {
         // TODO:
+        Queue<BSTNode> q1 = new LinkedList<>();
+		q1.add(r);
+		while(q1.isEmpty() != true){
+			BSTNode tempNode = q1.poll();
+			visit(tempNode);
+
+			/*Enqueue left child */
+			if (tempNode.left != null) {
+				q1.add(tempNode.left);
+			}
+
+			/*Enqueue right child */
+			if (tempNode.right != null) {
+				q1.add(tempNode.right);
+			}
+		}
     }
 
-    private class BTSIterator implements Iterator<T> {
-        private BSTNode iterator;
-        Queue<BSTNode> queue = new BST<T>();
-
-        private BTSIterator() {
-            iterator = root;
-        }
-
-        @Override
-        public boolean hasNext() {
-            // TODO Auto-generated method stub
-            return root.isLeaf();
-        }
-
-        @Override
-        public Object next() {
-            // TODO Auto-generated method stub
-            throw new UnsupportedOperationException("Unimplemented method 'next'");
-        }
-
+    @Override
+    public Iterator<T> iterator() {
+        // TODO Auto-generated method stub
+        return new BSTIterator<>(this);
     }
-
 }

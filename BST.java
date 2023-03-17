@@ -3,7 +3,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class BST<T extends Comparable<T>> implements Iterable<T>{
+public class BST<T extends Comparable<T>> implements Iterable<T> {
     class BSTNode implements Comparable<BSTNode> {
         private T data;
         private BSTNode left;
@@ -111,7 +111,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T>{
     }
 
     public void printLevelOrder() {
-        inOrderTraversal(root);
+        levelOrderTraversal(root);
     }
 
     // Private methods.
@@ -154,7 +154,7 @@ public class BST<T extends Comparable<T>> implements Iterable<T>{
     private int height(BSTNode r) {
         int h = -1;
 
-        if (r == null){
+        if (r == null) {
             return h;
         }
 
@@ -166,9 +166,11 @@ public class BST<T extends Comparable<T>> implements Iterable<T>{
         return h;
     }
 
+    private Queue<T> bstQueue = new LinkedList<>();
+
     private void visit(BSTNode r) {
         if (r != null)
-            System.out.println(r.getData());
+            bstQueue.add(r.getData());
     }
 
     private void inOrderTraversal(BSTNode r) {
@@ -205,27 +207,48 @@ public class BST<T extends Comparable<T>> implements Iterable<T>{
 
     private void levelOrderTraversal(BSTNode r) {
         // TODO:
-        Queue<BSTNode> q1 = new LinkedList<>();
-		q1.add(r);
-		while(q1.isEmpty() != true){
-			BSTNode tempNode = q1.poll();
-			visit(tempNode);
+        Queue<BSTNode> levelQueue = new LinkedList<>();
+        levelQueue.add(r);
+        while (levelQueue.isEmpty() != true) {
+            BSTNode tempNode = levelQueue.poll();
+            visit(tempNode);
 
-			/*Enqueue left child */
-			if (tempNode.left != null) {
-				q1.add(tempNode.left);
-			}
-
-			/*Enqueue right child */
-			if (tempNode.right != null) {
-				q1.add(tempNode.right);
-			}
-		}
+            /* Enqueue left child */
+            if (tempNode.left != null) {
+                levelQueue.add(tempNode.left);
+            }
+            /* Enqueue right child */
+            if (tempNode.right != null) {
+                levelQueue.add(tempNode.right);
+            }
+        }
     }
 
     @Override
     public Iterator<T> iterator() {
         // TODO Auto-generated method stub
-        return new BSTIterator<>(this);
+        return new BSTIteratorInOrder();
     }
+
+    private class BSTIteratorInOrder implements Iterator<T> {
+
+        public BSTIteratorInOrder() {
+            bstQueue.clear();
+            inOrderTraversal(root);
+        }
+
+        @Override
+        public boolean hasNext() {
+            // TODO Auto-generated method stub
+            return !bstQueue.isEmpty();
+        }
+
+        @Override
+        public T next() {
+            // TODO Auto-generated method stub
+            return bstQueue.remove();
+        }
+
+    }
+
 }

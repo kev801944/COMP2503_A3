@@ -1,6 +1,7 @@
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 /**
@@ -25,7 +26,7 @@ public class A3 {
 	private int topN = 4;
 	private int totalwordcount = 0;
 	// private Scanner input = new Scanner(System.in);
-	private File file = new File("input2.txt");
+	private File file = new File("input4.txt");
 	private BST<Avenger> alphabticalBST = new BST<>();
 	private BST<Avenger> mentionBST = new BST<Avenger>(new AvengerComparatorMentionOrder());
 	private BST<Avenger> mostPopularBST = new BST<Avenger>(new AvengerComparatorFreqDesc());
@@ -49,6 +50,15 @@ public class A3 {
 		 * use the tree iterator to do an in-order traversal of the alphabetical tree,
 		 * and add avengers to the other trees
 		 */
+		Iterator<Avenger> iter = alphabticalBST.iterator();
+		Avenger hawkeye = new Avenger(avengerRoster[6][0], avengerRoster[6][1]);
+		Avenger currNode = iter.next();
+		while (iter.hasNext()) {
+			if (currNode.equals(hawkeye)) {
+				System.out.println(currNode);
+			}
+			currNode = iter.next();
+		}
 	}
 
 	/**
@@ -131,10 +141,9 @@ public class A3 {
 		System.out.println("All avengers in the order they appeared in the input stream:");
 		// TODO: Print the list of avengers in the order they appeared in the input
 		// Make sure you follow the formatting example in the sample output
-		//		
+		//
 		mentionBST.printInOrder();
 		System.out.println();
-
 
 		System.out.println("Top " + topN + " most popular avengers:");
 		// TODO: Print the most popular avengers, see the instructions for tie breaking
@@ -156,9 +165,9 @@ public class A3 {
 		// TODO: Print the actual height and the optimal height for each of the four
 		// trees.
 		System.out.println("Height of the mention order tree is : " + mentionBST.height()
-		+ " (Optimal height for this tree is : " + mentionBST.height() + ")");
+				+ " (Optimal height for this tree is : " + mentionBST.height() + ")");
 		System.out.println("Height of the alphabetical tree is : " + alphabticalBST.height()
-		+ " (Optimal height for this tree is : " + alphabticalBST.height() + ")");
+				+ " (Optimal height for this tree is : " + alphabticalBST.height() + ")");
 		// System.out.println("Height of the most frequent tree is : " + ??
 		// + " (Optimal height for this tree is : " + ?? + ")");
 		// System.out.println("Height of the least frequent tree is : " + ??

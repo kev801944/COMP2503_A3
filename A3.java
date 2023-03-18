@@ -162,7 +162,9 @@ public class A3 {
 
 		System.out.println("All mentioned avengers in alphabetical order:");
 		// TODO: Print the list of avengers in alphabetical order
-		alphabticalBST.printInOrder();
+		for (Avenger a : alphabticalBST) {
+			System.out.println(a.toString());
+		}
 		System.out.println();
 
 		// TODO: Print the actual height and the optimal height for each of the four

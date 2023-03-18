@@ -53,6 +53,9 @@ public class A3 {
 		Iterator<Avenger> iter = alphabticalBST.iterator();
 		Avenger hawkeye = new Avenger(avengerRoster[6][0], avengerRoster[6][1]);
 		Avenger currNode = iter.next();
+
+		alphabticalBST.delete(hawkeye);
+
 		while (iter.hasNext()) {
 			if (currNode.equals(hawkeye)) {
 				System.out.println(currNode);

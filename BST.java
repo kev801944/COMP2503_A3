@@ -98,6 +98,13 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
         return height(root);
     }
 
+    /**
+     * Deletes a node from the tree
+     */
+    public void delete(T d){
+        delete(d,root);
+    }
+
     public void printInOrder() {
         inOrderTraversal(root);
     }
@@ -115,6 +122,21 @@ public class BST<T extends Comparable<T>> implements Iterable<T> {
     }
 
     // Private methods.
+
+    private void delete(T deleteKey, BSTNode r){
+        boolean checkKey = r.getData().equals(deleteKey);
+        if(r.isLeaf() && checkKey)
+            r.setData(null);
+        if(deleteKey.compareTo(r.getData()) < 0 )
+            r = r.getLeft();
+            delete(deleteKey, r);
+        if(deleteKey.compareTo(r.getData()) > 0)
+            r = r.getRight();
+            delete(deleteKey, r);
+        else {
+            if ()
+        }
+    }
 
     private T find(T d, BSTNode r) {
         if (r == null)
